@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rekap Tata Tertib SMA N 6 Madiun- Navigasi Lengkap</title>
+<style>
+  :root {
+    --sidebar-width: 250px;
+    --sidebar-collapsed-width: 50px;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+    background: #f4f4f4;
+    color: #222;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark {
+    background: #181818;
+    color: #eee;
+  }
+  #sidebar {
+    width: var(--sidebar-width);
+    background: #2e7d32;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s;
+  }
+  #sidebar.collapsed {
+    width: var(--sidebar-collapsed-width);
+  }
+  #sidebar header {
+    padding: 1rem;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+  }
+  #toggle-sidebar {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin: 0.5rem auto;
+    width: fit-content;
+    transition: transform 0.3s;
+  }
+  #toggle-sidebar.collapsed {
+    transform: rotate(180deg);
+  }
+  #nav-buttons {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 0.5rem;
+  }
+  .nav-btn {
+    display: block;
+    background: #388e3c;
+    border: none;
+    color: white;
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background-color 0.3s;
+  }
+  .nav-btn:hover {
+    background: #4caf50;
+  }
+  #sidebar.collapsed .nav-btn {
+    text-align: center;
+    padding: 10px 5px;
+    font-size: 0;
+  }
+  #sidebar.collapsed .nav-btn:hover {
+    font-size: 1rem;
+  }
+  #sidebar.collapsed .nav-btn::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 60px;
+    background: #333;
+    color: white;
+    padding: 3px 6px;
+    border-radius: 3px;
+    white-space: nowrap;
+    display: none;
+    z-index: 1000;
+    font-size: 0.9rem;
+  }
+  #sidebar.collapsed .nav-btn:hover::after {
+    display: block;
+  }
+  main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  header.main-header {
+    background: linear-gradient(90deg, #4caf50, #2e7d32);
+    color: white;
+    padding: 1rem 1.5rem;
+    font-size: 1.3rem;
+  }
+  #sheet-frame {
+    flex-grow: 1;
+    border: none;
+    width: 100%;
+  }
+  button.theme-toggle {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    background: #444;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    z-index: 20;
+  }
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <header>Menu Sheet</header>
+  <button id="toggle-sidebar" title="Toggle Sidebar">&#9776;</button>
+  <div id="nav-buttons"></div>
+</div>
+
+<main>
+  <header class="main-header">📊 Rekap Tata Tertib SMASIX</header>
+  <iframe id="sheet-frame" src=""></iframe>
+</main>
+
+<button class="theme-toggle" onclick="toggleTheme()">🌙 Mode Gelap</button>
+
+<script>
+  const baseSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSc_0t3Znf0X9eSpBcaJWlccpfUP7yVkwK51eJF_lMukq8LAiQZn3Jq_mxEy5Xm8j_vspSxTb25p0aD/pubhtml";
+
+  // Isi gid sesuai dengan masing-masing sheetmu (cek URL spreadsheet)
+  const sheets = [
+    { name: "Daftar Isi", gid: "1670469346" },
+    { name: "Telambat", gid: "1328070037" },
+    { name: "Alpha", gid: "1258603752" },
+    { name: "X-A", gid: "1406171803" },
+    { name: "X-B", gid: "302991046" },
+    { name: "X-C", gid: "944079364" },
+    { name: "X-D", gid: "1371101611" },
+    { name: "X-E", gid: "920015549" },
+    { name: "X-F", gid: "1931056424" },
+    { name: "X-G", gid: "2126199053" },
+    { name: "X-H", gid: "1401517437" },
+    { name: "X-I", gid: "571999262" },
+    { name: "XI-A", gid: "1776550704" },
+    { name: "XI-B", gid: "2123269225" },
+    { name: "XI-C", gid: "748366967" },
+    { name: "XI-D", gid: "344950157" },
+    { name: "XI-E", gid: "615791672" },
+    { name: "XI-F", gid: "477029208" },
+    { name: "XI-G", gid: "502141237" },
+    { name: "XI-H", gid: "801841993" },
+    { name: "XI-I", gid: "1368938090" },
+    { name: "XI-J", gid: "1471341395" },
+    { name: "XII-A", gid: "307462952" },
+    { name: "XII-B", gid: "2141752691" },
+    { name: "XII-C", gid: "1378802815" },
+    { name: "XII-D", gid: "186687565" },
+    { name: "XII-E", gid: "1319619118" },
+    { name: "XII-F", gid: "2027266169" },
+    { name: "XII-G", gid: "2142432146" },
+    { name: "XII-H", gid: "629192261" },
+    { name: "XII-I", gid: "1868165993" },
+    { name: "XII-J", gid: "162477446" }
+  ];
+
+  const navButtonsDiv = document.getElementById('nav-buttons');
+  const iframe = document.getElementById('sheet-frame');
+  const sidebar = document.getElementById('sidebar');
+  const toggleSidebarBtn = document.getElementById('toggle-sidebar');
+
+  sheets.forEach(sheet => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn';
+    btn.textContent = sheet.name;
+    btn.setAttribute('data-tooltip', sheet.name);
+    btn.onclick = () => {
+      iframe.src = `${baseSheetURL}?gid=${sheet.gid}`;
+    };
+    navButtonsDiv.appendChild(btn);
+  });
+
+  // Load sheet pertama otomatis
+  if (sheets.length > 0) {
+    iframe.src = `${baseSheetURL}?gid=${sheets[0].gid}`;
+  }
+
+  toggleSidebarBtn.onclick = () => {
+    sidebar.classList.toggle('collapsed');
+    toggleSidebarBtn.classList.toggle('collapsed');
+  };
+
+  function toggleTheme() {
+    document.body.classList.toggle('dark');
+    const btn = document.querySelector('.theme-toggle');
+    btn.textContent = document.body.classList.contains('dark') ? '☀️ Mode Terang' : '🌙 Mode Gelap';
+  }
+</script>
+
+</body>
+</html>
